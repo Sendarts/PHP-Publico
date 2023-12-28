@@ -3,54 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
+    <title>Calculadora JavaScript</title>
+    <style>
+        input[type="button"] {
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Simple Calculator</h2>
+    <h2>Calculadora JavaScript</h2>
 
-    <form method="post" action="">
-        <input type="text" name="num1" placeholder="Número 1" required>
-        <select name="operation" required>
-            <option value="add">Sumar</option>
-            <option value="subtract">Restar</option>
-            <option value="multiply">Multiplicar</option>
-            <option value="divide">Dividir</option>
-        </select>
-        <input type="text" name="num2" placeholder="Número 2" required>
-        <input type="submit" value="Calcular">
-    </form>
+    <table>
+        <tr>
+            <td colspan="4"><input type="text" id="display" disabled></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="appendToDisplay('7')"></td>
+            <td><input type="button" value="8" onclick="appendToDisplay('8')"></td>
+            <td><input type="button" value="9" onclick="appendToDisplay('9')"></td>
+            <td><input type="button" value="/" onclick="appendToDisplay('/')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="appendToDisplay('4')"></td>
+            <td><input type="button" value="5" onclick="appendToDisplay('5')"></td>
+            <td><input type="button" value="6" onclick="appendToDisplay('6')"></td>
+            <td><input type="button" value="-" onclick="appendToDisplay('-')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="1" onclick="appendToDisplay('1')"></td>
+            <td><input type="button" value="2" onclick="appendToDisplay('2')"></td>
+            <td><input type="button" value="3" onclick="appendToDisplay('3')"></td>
+            <td><input type="button" value="+" onclick="appendToDisplay('+')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="0" onclick="appendToDisplay('0')"></td>
+            <td><input type="button" value="." onclick="appendToDisplay('.')"></td>
+            <td><input type="button" value="C" onclick="clearDisplay()"></td>
+            <td><input type="button" value="=" onclick="calculate()"></td>
+        </tr>
+    </table>
 
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $num1 = $_POST['num1'];
-        $num2 = $_POST['num2'];
-        $operation = $_POST['operation'];
-
-        switch ($operation) {
-            case 'add':
-                $result = $num1 + $num2;
-                break;
-            case 'subtract':
-                $result = $num1 - $num2;
-                break;
-            case 'multiply':
-                $result = $num1 * $num2;
-                break;
-            case 'divide':
-                if ($num2 != 0) {
-                    $result = $num1 / $num2;
-                } else {
-                    $result = 'No se puede dividir por cero';
-                }
-                break;
-            default:
-                $result = 'Operación no válida';
-                break;
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
         }
 
-        echo '<p>Resultado: ' . $result . '</p>';
-    }
-    ?>
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
 
+        function calculate() {
+            var expression = document.getElementById('display').value;
+            try {
+                var result = eval(expression);
+                document.getElementById('display').value = result;
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+    </script>
 </body>
 </html>
